@@ -1,0 +1,35 @@
+services:
+    dra:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        # env_file:
+        #     - ./envs/development.env
+        
+        volumes:
+            - ./:/app
+            - /store/dra/media:/app/media
+            - /store/dra/static:/app/static
+        
+        ports:
+            - 8000:8000
+          
+
+        command:
+            gunicorn dra_mobile_auth.wsgi:application --reload --bind 0.0.0.0:8000
+        
+    
+    # account-database:
+    #     image: postgres:alpine
+
+    #     env_file:
+    #         - ./envs/development.db.env
+
+    #     volumes: 
+    #       -  account-volume-db:/var/lib/postgresql/data:rw
+
+volumes:
+    dra-static:
+    dra-media:
+    dra-volume-db:
+
